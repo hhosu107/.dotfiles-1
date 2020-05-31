@@ -1,0 +1,9 @@
+.cargo
+.oh-my-zsh
+ssh/id_rsa*
+.resty
+.vim-plugins
+.vim
+.vim_runtime
+.fzf*
+.tmux

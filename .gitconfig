@@ -1,38 +1,24 @@
-# vim: noexpandtab sw=8
 [user]
 	name = Chansu Park
-	email = hhosu107@gmail.com
-[core]
-	editor = vim
-	excludesfile = ~/.gitexclude
-	fscache = yes
-	autocrlf = no
-	quotepath = false
-[color]
-	ui = auto
-[diff]
-	renames = copies
-	tool = vimdiff
-[difftool]
-	prompt = no
-[fetch]
-	prune = yes
-[push]
-	default = simple
+	email = chansupark@wisefour.com
+[alias]
+	log = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+
+  # Checkout https://github.com/simnalamburt/cgitc for short aliases
+  # git pr [<remote>]
+  # Fetch pull requests from Github. Fetch "origin" if <remote> is not specified.
+  #
+  # Usage:
+  # git pr
+  # git pr other
+  pr = "!_() { git config fetch.prune no && git fetch ${1:-origin} +refs/pull/*/head:refs/remotes/${1:-origin}/pr/*;  }; _"
+  g = "log --graph --pretty='format:%C(auto)%h%d %s%x1b[38;5;022m% GS %x1b[38;5;239m%cr%x1b[0m'"
+  h = "git log -p -M --follow"
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
-[credential]
-	helper = cache --timeout=3600
-[credential "https://github.com"]
-	username = hhosu107
-[credential "http://bitbucket.org"]
-	username = hhosu107
 [filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 	required = true
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-[branch]
-	autosetuprebase = always
-[alias]
-	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
