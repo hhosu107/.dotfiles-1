@@ -7,3 +7,8 @@ ssh/id_rsa*
 .vim_runtime
 .fzf*
 .tmux
+.rustup
+.vim_mru_files
+.viminfo
+kubectl*
+.config-old
