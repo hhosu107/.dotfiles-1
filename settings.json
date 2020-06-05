@@ -7,11 +7,11 @@
 //     cp /mnt/c/Users/hhosu/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ~/.dotfiles/settings.json
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "defaultProfile": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
 
     "profiles": {
         "defaults": {
-            "fontFace": "Hack Regular",
+            "fontFace": "MesloLGS NF",
             "fontSize": 11
         },
         "list": [
