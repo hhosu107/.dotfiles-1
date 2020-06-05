@@ -1,43 +1,51 @@
-> My own dotfiles
-
 <p align=center>
   <a href="https://github.com/simnalamburt">
-    <img src="https://raw.githubusercontent.com/simnalamburt/.dotfiles/resources/logo.png">
+    <img alt="dotfiles" src="https://raw.githubusercontent.com/simnalamburt/i/master/.dotfiles/logo.png">
   </a>
-</p>
-
-<p align=center>
-  <b><a href="docs/cheatsheet.md">CHEAT SHEET</a></b> |
-  <a href="docs/os-x.md">OS X</a> |
-  <a href="docs/msys2.md">MSYS2</a> |
-  <a href="docs/ubuntu.md">Ubuntu</a> |
-  <a href="docs/fedora.md">Fedora</a> |
-  <a href="docs/arch.md">Arch Linux</a>
+  <br>
+  <b><a href="docs/">documentation</a></b> | <a href="packages/">packages</a>
 </p>
 
 <br>
 
-Requires `git` and `zsh`
+```shell
+git clone https://github.com/simnalamburt/.dotfiles.git --depth=1 ~/.dotfiles
 
-```bash
-cd ~
-git clone https://github.com/simnalamburt/.dotfiles.git --depth=1
-ln -sf .dotfiles/.zshrc
-ln -sf .dotfiles/.vimrc
-ln -sf .dotfiles/.gitconfig
-ln -sf .dotfiles/.gitexclude
-ln -sf .dotfiles/.tmux.conf
-ln -sf .dotfiles/.gemrc
+# zinit         https://github.com/zdharma/zinit
+# vim-plug      https://github.com/junegunn/vim-plug
+# tpm           https://github.com/tmux-plugins/tpm
+# kubectl-ctx   https://github.com/weibeld/kubectl-ctx
+# kubectl-ns    https://github.com/weibeld/kubectl-ns
 
-# fish
-ln -s ~/.dotfiles/omf ~/.config/omf
-curl -L https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | fish
+ln -sf ~/.dotfiles/.zshrc ~
+ln -sf ~/.dotfiles/.vimrc ~
+ln -sf ~/.dotfiles/.tmux.conf ~
+ln -sf ~/.dotfiles/.gitconfig ~ && ln -sf ~/.dotfiles/.gitexclude ~ &&\
+  cp ~/.dotfiles/.gitconfig.local ~
 
-mkdir -p .ssh && chmod 700 .ssh && ln -sf ../.dotfiles/.ssh/config .ssh
-mkdir -p .gradle && ln -s ../.dotfiles/gradle.properties .gradle
-ln -sf ~/.dotfiles/karabiner/private.xml "$HOME/Library/Application Support/Karabiner"
+mkdir -p ~/.ssh && chmod 700 ~/.ssh &&\
+  ln -sf ~/.dotfiles/.ssh/config ~/.ssh &&\
+  cp ~/.dotfiles/.ssh/config.local ~/.ssh
+
+# Misc
+mkdir -p ~/.gnupg && cp ~/.dotfiles/gpg-agent.conf ~/.gnupg
+mkdir -p ~/.bundle && ln -sf ~/.dotfiles/bundle-config ~/.bundle/config
 ```
 
---------
+#### Check out my vim/zsh/tmux plugins
+- [simnalamburt/vim-mundo     ](https://github.com/simnalamburt/vim-mundo) - Vim undo tree visualizer
+- [simnalamburt/cgitc         ](https://github.com/simnalamburt/cgitc) - Close Git Combat
+- [simnalamburt/zsh-expand-all](https://github.com/simnalamburt/zsh-expand-all) - Automatically expands all glob expressions, subcommands, and aliases
+- [simnalamburt/ctrlf         ](https://github.com/simnalamburt/ctrlf) - Ctrl+F for your shell
+- [simnalamburt/tmux-pane     ](https://github.com/simnalamburt/tmux-pane) - My key-bindings for tmux pane resizing and splitting
+- [simnalamburt/shellder      ](https://github.com/simnalamburt/shellder) - Simple and feature-rich zsh/fish shell theme
 
-BSD 2-Clause
+<br>
+
+--------
+*dotfiles* is primarily distributed under the terms of both the [MIT license]
+and the [Apache License (Version 2.0)]. See [COPYRIGHT] for details.
+
+[MIT license]: LICENSE-MIT
+[Apache License (Version 2.0)]: LICENSE-APACHE
+[COPYRIGHT]: COPYRIGHT
