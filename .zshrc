@@ -72,7 +72,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vundle )
+plugins=(git vundle zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 source ~/resty
@@ -153,5 +153,13 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
+
+# lsd commands (cargo install --git https://github.com/Peltoche/lsd.git --branch master)
+
+alias ls='lsd'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
 
 export PATH=$HOME/.dotfiles:$PATH
