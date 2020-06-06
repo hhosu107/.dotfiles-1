@@ -105,12 +105,9 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias tb="tensorboard --port 0 --logdir"
-alias allong="saml2aws login --profile=default --force --session-duration=43200"
-alias kac="kube_access --refresh_token --copy_token"
-alias mount_nas0_none="sshfs -o compression=yes -o reconnect -o cache_timeout=60 -o workaround=none ~/nas0 nas0.prem.forg.skelterlabs.com:/storage/nas0"
-alias mount_nas0='sshfs -ovolname=nas0 -o compression=yes -o reconnect -o cache_timeout=60 nas0.prem.forg.skelterlabs.com:/storage/nas0 /nas0'
-alias ssh_nas0='ssh -t nas0.prem.forg.skelterlabs.com'
+# Associated with gpg sign
+alias gcs="git commit -S"
+export GPG_TTY=$(tty)
 
 # Bazel zsh completion
 complete -o nospace -F _bazel__complete bazelisk
