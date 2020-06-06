@@ -1,3 +1,16 @@
+[[ -o interactive ]] || return
+
+stty stop undef
+export GPG_TTY=$(tty)
+
+if [ -f "${HOME}/.gpg-agent-info" ]; then
+  . "${HOME}/.gpg-agent-info"
+  export GPG_AGENT_INFO
+  export SSH_AUTH_SOCK
+  export SSH_AGENT_PID
+fi
+
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -95,7 +108,7 @@ source ~/resty
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH="~/.ssh/id_ed25519"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -107,7 +120,6 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # Associated with gpg sign
 alias gcs="git commit -S"
-export GPG_TTY=$(tty)
 
 # Bazel zsh completion
 complete -o nospace -F _bazel__complete bazelisk
