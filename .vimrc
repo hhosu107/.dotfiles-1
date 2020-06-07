@@ -191,6 +191,9 @@ try
   Plug 'godlygeek/tabular'
   Plug 'justinmk/vim-dirvish'
 
+  " git blame plugin for nvim
+  Plug 'APZelos/blamer.nvim'
+
   " Language Server
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
