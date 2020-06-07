@@ -11,8 +11,8 @@
 
     "profiles": {
         "defaults": {
-            "fontFace": "MesloLGS NF",
-            "fontSize": 11
+            "fontFace": "Hack NF",
+            "fontSize": 12
         },
         "list": [
             {
