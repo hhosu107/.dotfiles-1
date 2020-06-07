@@ -362,6 +362,10 @@ try
   let g:mundo_right = 1
   nnoremap <leader>g :MundoToggle<CR>
 
+  " blamer.nvim
+  let g:blamer_enabled = 1
+  let g:blamer_prefix = ' > '
+
   " LanguageClient-neovim
   set hidden
 
