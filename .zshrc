@@ -124,6 +124,11 @@ alias gcs="git commit -S"
 # Bazel zsh completion
 complete -o nospace -F _bazel__complete bazelisk
 
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # Move Forward/Backward on command line
 bindkey "[D" backward-word
 bindkey "[C" forward-word
@@ -170,6 +175,14 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
+
+# Activate virtualenv if sourcing file exist
+[[ ! -f ~/.dotfiles/wsl-python.zsh ]] || source ~/.dotfiles/wsl-python.zsh
+
+# Load local configs
+if [[ -f ~/.zshrc.local ]]; then
+  source ~/.zshrc.local
+fi
 
 export PATH=$HOME/.dotfiles:$PATH
 
