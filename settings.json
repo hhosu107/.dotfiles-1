@@ -12,7 +12,11 @@
     "profiles": {
         "defaults": {
             "fontFace": "Hack NF",
-            "fontSize": 12
+            "fontSize": 12,
+            "backgroundImage" : "%USERPROFILE%/Desktop/wallpaper/632051.png",
+            "backgroundImageOpacity" : 0.4,
+            "backgroundImageStretchMode" : "fill",
+            "backgroundImageAlignment": "center"
         },
         "list": [
             {
