@@ -392,7 +392,27 @@ catch /^Vim\%((\a\+)\)\=:E185/
   " Fallback
   silent! colorscheme elflord
 endtry
+" NOTE(chansupark): ctermbg, etc settings should be overwritten after
+" colorscheme is reset.
+hi Normal ctermbg=None
 let s:back_color = 234
+
+" dark red
+hi tsxTagName ctermfg=168 guifg=#E06C75
+
+" orange
+hi tsxCloseString ctermfg=210 guifg=#F99575
+hi tsxCloseTag ctermfg=210 guifg=#F99575
+hi tsxAttributeBraces ctermfg=210 guifg=#F99575
+hi tsxEqual ctermfg=210 guifg=#F99575
+
+" yellow
+hi tsxAttrib ctermfg=216 guifg=#F8BD7F cterm=italic
+
+" popup menu
+hi CocFloating ctermbg=235 guibg=#262626
+hi NormalFloat ctermbg=235 guibg=#262626
+hi Pmenu ctermbg=235 ctermfg=252 guibg=#262626 guifg=#d9d9d9
 
 function! s:rs(item)
   execute printf('highlight %s cterm=NONE', a:item)
