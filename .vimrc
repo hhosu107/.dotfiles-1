@@ -24,7 +24,15 @@ set noshowmode
 set noswapfile
 set nowrap
 set updatetime=500
-set termguicolors
+" set termguicolors " If you don't care the transparent background, enable this.
+
+" NOTE(chansupark): Set this with
+" https://github.com/vim/vim/issues/981#issuecomment-241941032.
+" if has("termguicolors")    " set true colors
+"   set t_8f=[38;2;%lu;%lu;%lum
+"   set t_8b=[48;2;%lu;%lu;%lum
+"   set termguicolors
+" endif
 
 " History
 if has('persistent_undo')
@@ -68,7 +76,7 @@ set wildmode=longest,full
 
 " Completion
 set hidden
-set completeopt=menuone,noinsert,noselect
+set completeopt=preview,menuone,noinsert,noselect
 set shortmess+=c
 if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
@@ -158,7 +166,10 @@ try
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'simnalamburt/coc-tsserver', {'do': 'yarn install --frozen-lockfile'} " https://github.com/neoclide/coc-tsserver/pull/181
+    Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc-sources', {'do': 'yarn install --frozen-lockfile', 'rtp': 'packages/emoji'}
     Plug 'ervandew/supertab'
     Plug 'junegunn/fzf'
   endif
@@ -334,7 +345,7 @@ try
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
   nnoremap <silent> <F2> :call LanguageClient:#textDocument_rename()<CR>
 
-catch /^Vim\%((\a\+)\)\=:E17/
+catch /^Vim\%((\a\+)\)\=:E117/
 endtry
 
 
@@ -347,6 +358,10 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme elflord
 endtry
+" Note(chansupark): ctermbg, etc setting should be overwritten after
+" colorscheme is reset.
+hi Normal ctermbg=None
+let s:back_color = 234
 
 " dark red
 hi tsxTagName ctermfg=168 guifg=#E06C75
@@ -375,8 +390,6 @@ if !exists('s:rgb_map')
 endif
 " NOTE(chansupark): ctermbg, etc settings should be overwritten after
 " colorscheme is reset.
-hi Normal ctermbg=None
-let s:back_color = 234
 
 function! s:rs(item)
   execute printf('highlight %s cterm=NONE gui=None', a:item)
