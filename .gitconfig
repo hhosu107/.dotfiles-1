@@ -27,15 +27,6 @@
 	default = simple
 [pull]
 	rebase = true
-[core]
-	editor = vim
-	pager = less -+XF -SQc
-	excludesfile = ~/.gitexclude
-	fscache = yes
-	preloadindex = yes
-	autocrlf = no
-	quotepath = no
-	precomposeunicode = yes
 [merge]
 	tool = vimdiff
 [filter "lfs"]
