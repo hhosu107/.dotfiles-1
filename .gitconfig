@@ -3,7 +3,7 @@
 	email = hhosu107@gmail.com
 [alias]
 	log = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-  lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+        lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 
   # Checkout https://github.com/simnalamburt/cgitc for short aliases
   # git pr [<remote>]
@@ -15,6 +15,27 @@
   pr = "!_() { git config fetch.prune no && git fetch ${1:-origin} +refs/pull/*/head:refs/remotes/${1:-origin}/pr/*;  }; _"
   g = "log --graph --pretty='format:%C(auto)%h%d %s%x1b[38;5;022m% GS %x1b[38;5;239m%cr%x1b[0m'"
   h = "git log -p -M --follow"
+[log]
+	date = iso8601
+[color]
+	ui = auto
+[diff]
+	renames = copies
+[fetch]
+	prune = yes
+[push]
+	default = simple
+[pull]
+	rebase = true
+[core]
+	editor = vim
+	pager = less -+XF -SQc
+	excludesfile = ~/.gitexclude
+	fscache = yes
+	preloadindex = yes
+	autocrlf = no
+	quotepath = no
+	precomposeunicode = yes
 [merge]
 	tool = vimdiff
 [filter "lfs"]
@@ -23,6 +44,16 @@
 	process = git-lfs filter-process
 	required = true
 [commit]
-	gpgsign = true
+	gpgsign = yes
+[rerere]
+	enabled = yes
+[stash]
+	showPatch = true
+[status]
+	showStash = true
+[submodule]
+	fetchJobs = 0
 [gpg]
 	program = gpg
+[include]
+	path = ~/.gitconfig.local

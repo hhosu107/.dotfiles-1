@@ -84,7 +84,7 @@ set shortmess+=c
 if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
-else
+elseif has('nvim') ? has('nvim-0.2') : 1
   set signcolumn=yes
 endif
 
@@ -111,6 +111,8 @@ vnoremap <C-e> $
 " Easy horizontal scrolling
 noremap <esc>l 3zl
 noremap <esc>h 3zh
+noremap <a-l> 3zl
+noremap <a-h> 3zh
 " Easy delete key
 vnoremap <backspace> "_d
 " Easy file save
@@ -127,6 +129,13 @@ nnoremap <silent> <esc>h :vertical resize -5<CR>
 nnoremap <silent> <esc>j :resize -3<CR>
 nnoremap <silent> <esc>k :resize +3<CR>
 nnoremap <silent> <esc>l :vertical resize +5<CR>
+" Additional splitting & resizing
+nnoremap <silent> <a--> :split<CR>
+nnoremap <silent> <a-\> :vertical split<CR>
+nnoremap <silent> <a-h> :vertical resize -5<CR>
+nnoremap <silent> <a-j> :resize -3<CR>
+nnoremap <silent> <a-k> :resize +3<CR>
+nnoremap <silent> <a-l> :vertical resize +5<CR>
 " Tab navigations
 nnoremap <esc>t :tabnew<CR>
 nnoremap <esc>T :-tabnew<CR>
@@ -139,6 +148,18 @@ nnoremap <esc>6 6gt
 nnoremap <esc>7 7gt
 nnoremap <esc>8 8gt
 nnoremap <esc>9 9gt
+" with <a-*>
+nnoremap <a-t> :tabnew<CR>
+nnoremap <a-T> :-tabnew<CR>
+nnoremap <a-1> 1gt
+nnoremap <a-2> 2gt
+nnoremap <a-3> 3gt
+nnoremap <a-4> 4gt
+nnoremap <a-5> 5gt
+nnoremap <a-6> 6gt
+nnoremap <a-7> 7gt
+nnoremap <a-8> 8gt
+nnoremap <a-9> 9gt
 
 " Easy newline insert
 function! s:CustomEnter()
@@ -156,16 +177,17 @@ nnoremap <CR> :call <SID>CustomEnter()<CR>
 "
 " List of plugins
 "
+let s:use_coc = (has('nvim') ? has('nvim-0.3.2') : has('patch-8.0.1453')) && executable('yarn')
 try
-  " call plus#begin('~/.vim/plugged')
-  call plug#begin(exists('s:plug') ? s:plug : '~/.vim/plugged')
+  call plus#begin('~/.vim/plugged')
+  " call plug#begin(exists('s:plug') ? s:plug : '~/.vim/plugged')
 
   " Configs
   Plug 'tpope/vim-sensible'
   Plug 'vim-utils/vim-interruptless'
 
   " IDE
-  if executable('yarn')
+  if s:use_coc
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
@@ -173,6 +195,10 @@ try
     Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-sources', {'do': 'yarn install --frozen-lockfile', 'rtp': 'packages/emoji'}
+    if executable('clangd')
+      Plug 'clangd/coc-clangd', {'do': 'yarn install --frozen-lockfile'}
+    endif
+    Plug 'fannheyward/coc-rust-analyzer', {'do': 'yarn install --frozen-lockfile'}
     Plug 'ervandew/supertab'
     Plug 'ayu-theme/ayu-vim'
   endif
@@ -221,54 +247,60 @@ try
   "
   " Configs for plugins
   "
+  if s:use_coc
+    " coc.nvim
+    let g:coc_disable_startup_warning = 1
+    nnoremap <silent> K :call <SID>show_documentation<CR>
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+	execute 'h '.expand('<cword>')
+      else
+	call CocActionAsync('doHover')
+      endif
+    endfunction
 
-  " coc.nvim
-  let g:coc_disable_startup_warning = 1
-  nnoremap <silent> K :call <SID>show_documentation<CR>
-  function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-      execute 'h '.expand('<cword>')
-    else
-      call CocActionAsync('doHover')
-    endif
-  endfunction
+    " coc-highlight
+    augroup vimrc_highlight
+      autocmd!
+      autocmd CursorHold * silent call <SID>highlight()
+    augroup END
+    function! s:highlight()
+      if exists('*CocActionAsync')
+        call CocActionAsync('highlight')
+      endif
+    endfunction
 
-  " coc-highlight
-  augroup vimrc_highlight
-    autocmd!
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-  augroup END
+    " coc-prettier
+    command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-  " coc-prettier
-  command! -nargs=0 Prettier :CocCommand prettier.formatFile
+    " supertab
+    let g:SuperTabDefaultCompletionType = "<c-n>"
 
-  " supertab
-  let g:SuperTabDefaultCompletionType = "<c-n>"
-
-  " fzf
-  nnoremap <F5> :call <SID>lsp_menu()<CR>
-  function! s:lsp_menu()
-    call fzf#run({
-    \ 'source': [
-    \    'rename',
-    \    'jumpDefinition',
-    \    'jumpDeclaration',
-    \    'jumpImplementation',
-    \    'jumpTypeDefinition',
-    \    'jumpReferences',
-    \    'diagnosticInfo',
-    \    'diagnosticNext',
-    \    'diagnosticPrevious',
-    \    'format',
-    \    'openLink',
-    \    'doQuickfix',
-    \    'doHover',
-    \    'refactor',
-    \ ],
-    \ 'sink': function('CocActionAsync'),
-    \ 'options': '+m',
-    \ 'down': 10 })
-  endfunction
+    " fzf
+    nnoremap <F5> :call <SID>lsp_menu()<CR>
+    function! s:lsp_menu()
+      call fzf#run({
+      \ 'source': [
+      \    'rename',
+      \    'jumpDefinition',
+      \    'jumpDeclaration',
+      \    'jumpImplementation',
+      \    'jumpTypeDefinition',
+      \    'jumpReferences',
+      \    'diagnosticInfo',
+      \    'diagnosticNext',
+      \    'diagnosticPrevious',
+      \    'format',
+      \    'openLink',
+      \    'doQuickfix',
+      \    'doHover',
+      \    'refactor',
+      \ ],
+      \ 'sink': function('CocActionAsync'),
+      \ 'options': '+m',
+      \ 'down': 10 })
+    endfunction
+  endif
 
   " nerdtree
   noremap <silent> <C-n> :NERDTreeToggle<CR>
@@ -292,10 +324,10 @@ try
 
   " vim-indent-guides
   nmap <leader>i <Plug>IndentGuidesToggle
-  let g:indent_guides_auto_colors = 0
-  let g:indent_guides_start_level = 2
   let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_exclude_filetypes = ['help']
+  let g:indent_guides_auto_colors = 0
+  let g:indent_guides_guide_size = 1
+  let g:indent_guides_start_level = 2
   let g:indent_guides_default_mapping = 0
 
   " vim-terraform
@@ -384,11 +416,6 @@ hi CocFloating ctermbg=235 guibg=#262626
 hi NormalFloat ctermbg=235 guibg=#262626
 hi Pmenu ctermbg=235 ctermfg=252 guibg=#262626 guifg=#d9d9d9
 
-" ayu setting
-let s:tab_color = '#1c2328'
-let s:indent_color = '#1c2328' " TODO
-let s:match_color = '#232b32' " TODO
-
 function! s:fg(item, color)
   " execute printf('highlight %s ctermfg=%s guifg=%s', a:item, a:color, get(s:rgb_map, a:color))
   execute printf('highlight %s guibg=%s', a:item, a:color)
@@ -400,6 +427,7 @@ endfunction
 
 
 " TabLine
+let s:tab_color = '#1c2328'
 highlight TabLine cterm=None gui=None
 call s:fg('TabLine', '#62788c')
 call s:bg('TabLine', s:tab_color)
@@ -412,15 +440,12 @@ call s:fg('DiffDelete', '#232b32')
 call s:bg('DiffDelete', 'NONE')
 
 " IndentGuides
+let s:indent_color = '#151a1e'
 call s:bg('IndentGuidesEven', s:indent_color)
-if &tabstop < 4
-  call s:bg('IndentGuidesOdd', 'NONE')
-else
-  let g:indent_guides_guide_size = 1
-  call s:bg('IndentGuidesOff', s:indent_color)
-endif
+call s:bg('IndentGuidesOdd', s:indent_color)
 
 " Matching
+let s:match_color = '#232b32'
 highlight MatchParen cterm=None gui=None
 call s:bg('MatchParen', s:match_color)
 call s:bg('CocHighlightTest', s:match_color)
@@ -440,12 +465,6 @@ endif
 "
 augroup vimrc
   autocmd!
-
-  " Indentation setting for Golang
-  autocmd BufNewFile,BufRead *.go setlocal noet ts=8 sw=8 sts=8
-
-  " Treat .eslintrc .babelrc as json
-  autocmd BufRead,BufNewFile .{eslintrc,babelrc,swcrc} setf json
 
   " Vim automatic reload
   autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif

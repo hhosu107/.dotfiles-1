@@ -27,6 +27,11 @@ mkdir -p ~/.ssh && chmod 700 ~/.ssh &&\
   ln -sf ~/.dotfiles/.ssh/config ~/.ssh &&\
   cp ~/.dotfiles/.ssh/config.local ~/.ssh
 
+
+# Neovim
+mkdif -p ~/.config/nvim
+ln -s ~/.dotfiles/.vimrc ~/.config/nvim/init.vim
+
 # Misc
 mkdir -p ~/.gnupg && cp ~/.dotfiles/gpg-agent.conf ~/.gnupg
 mkdir -p ~/.bundle && ln -sf ~/.dotfiles/bundle-config ~/.bundle/config
