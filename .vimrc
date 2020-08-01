@@ -425,6 +425,16 @@ highlight MatchParen cterm=None gui=None
 call s:bg('MatchParen', s:match_color)
 call s:bg('CocHighlightTest', s:match_color)
 
+
+" WSL yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'
+if executable(s:clip)
+  augroup WSLYank
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+  augroup END
+endif
+
 "
 " Define a 'vimrc' augroup
 "
