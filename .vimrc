@@ -179,7 +179,7 @@ nnoremap <CR> :call <SID>CustomEnter()<CR>
 "
 let s:use_coc = (has('nvim') ? has('nvim-0.4.3') : has('patch-8.0.1453')) && executable('yarn')
 try
-  call plus#begin('~/.vim/plugged')
+  call plug#begin('~/.vim/plugged')
   " call plug#begin(exists('s:plug') ? s:plug : '~/.vim/plugged')
 
   " Configs
