@@ -12,3 +12,4 @@ ssh/id_rsa*
 .viminfo
 kubectl*
 .config-old
+.zshrc.local
