@@ -25,7 +25,7 @@ autoload -U +X compinit && compinit
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -87,9 +87,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vundle zsh-autosuggestions)
 
-source $ZSH/oh-my-zsh.sh
-source ~/resty
+if [ -f "${ZSH}/oh-my-zsh.sh" ]; then
+  source $ZSH/oh-my-zsh.sh
+fi
 
+if [ -f "${HOME}/resty" ]; then
+  source ~/resty
+fi
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -158,6 +162,9 @@ fi
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
+zplugin ice depth=1
+zplugin light romkatv/powerlevel10k
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)

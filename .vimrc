@@ -201,6 +201,7 @@ try
     endif
     Plug 'fannheyward/coc-rust-analyzer', {'do': 'yarn install --frozen-lockfile'}
     Plug 'ervandew/supertab'
+    Plug 'junegunn/fzf'
     Plug 'ayu-theme/ayu-vim'
   endif
   Plug 'ryanoasis/vim-devicons'

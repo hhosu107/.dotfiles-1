@@ -1,6 +1,7 @@
 [user]
 	name = Chansu Park
 	email = hhosu107@gmail.com
+	signingkey = 3998157508838255811AF20540BA1C90C70C5C39
 [alias]
 	log = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
         lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -35,7 +36,7 @@
 	process = git-lfs filter-process
 	required = true
 [commit]
-	gpgsign = yes
+	gpgsign = true
 [rerere]
 	enabled = yes
 [stash]

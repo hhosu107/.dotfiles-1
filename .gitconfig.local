@@ -1,8 +1,8 @@
 # vim: ft=gitconfig noexpandtab sw=8
 
 # git-delta
-[core]
-        pager = BAT_PAGER='less -+XF -SQc' delta
+# [core]
+#         pager = BAT_PAGER='less -+XF -SQc' delta
 
 # diff-highlight.perl (Debian)
 # [pager]
