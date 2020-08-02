@@ -159,23 +159,80 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+autoload -U is-at-least
+if is-at-least 5.1 && [[ -d ~/.zinit ]]; then
 
-zplugin ice depth=1
-zplugin light romkatv/powerlevel10k
+  source "$HOME/.zinit/bin/zinit.zsh"
+  autoload -Uz _zinit
+  (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node \
-    simnalamburt/cgitc \
-    simnalamburt/ctrlf
+  zplugin ice depth=1
+  zplugin light romkatv/powerlevel10k
 
-### End of Zinit's installer chunk
+  ZSH_AUTOSUGGEST_USE_ASYNC=1
+  if is-at-least 5.3; then
+    zinit ice silent wait'1' atload'_zsh_autosuggest_start'
+  fi
+  zinit light zsh-users/zsh-autosuggestions
+
+  # Easily access the directories you visit most often.
+  #
+  # Usage:
+  #   $ z work
+  #   $ <CTRL-G>work
+  zinit light agkozak/zsh-z
+  zinit light andrewferrier/fzf-z
+  export FZFZ_SUBDIR_LIMIT=0
+
+  # Automatically expand all aliases
+  ZSH_EXPAND_ALL_DISABLE=word
+  zinit light simnalamburt/zsh-expand-all
+
+  # Load a few important annexes, without Turbo
+  # (this is currently required for annexes)
+  zinit light-mode for \
+      zsh-users/zsh-history-substring-search \
+      zsh-users/zsh-completions \
+      zdharma/fast-syntax-highlighting \
+      zinit-zsh/z-a-as-monitor \
+      zinit-zsh/z-a-patch-dl \
+      zinit-zsh/z-a-bin-gem-node \
+      simnalamburt/cgitc \
+      simnalamburt/ctrlf
+
+  autoload -Uz compinit
+  compinit
+  zinit cdreplay
+
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+  ### End of Zinit's installer chunk
+else
+  # Default terminal
+  case "$TERM" in
+    xterm-color|*-256color)
+      PS1=$'\e[1;32m%n@m\e[0m:\e[1;34m%~\e[0m%(!.#.$) ';;
+    *)
+      PS1='%n@%m:%~%(!.#.$) ';;
+  esac
+
+  autoload -Uz compinit
+  compinit
+fi
+
+#
+# zsh-sensible
+#
+alias l='ls -lah'
+alias mv='mv -i'
+alias cp='cp -i'
+
+setopt auto_cd histignorealldups sharehistory
+zstyle ':completion:*' menu select
+
+HISTSIZE=90000
+SAVEHIST=90000
+HISTFILE=~/.zsh_history
 
 # lsd commands (cargo install --git https://github.com/Peltoche/lsd.git --branch master)
 
@@ -184,6 +241,39 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
+
+#
+# lscolors
+#
+autoload -U colors && colors
+export LSCOLORS="Gxfxcxdxbxegedxbagxcad"
+export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=30;46:tw=0;42:ow=30;43"
+export TIME_STYLE='long-iso'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+
+#
+# zsh-substring-completion
+#
+setopt complete_in_word
+setopt always_to_end
+WORDCHARS=''
+zmodload -i zsh/complist
+
+# Substring completion
+zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# If ENV of EDITOR/VISUAL_CODE includes 'vi', then every emacs-like bindings are
+# automatically disabled, including ^A/^E.
+# References:
+#   https://stackoverflow.com/a/43087047
+#   https://github.com/zsh-users/zsh/blob/96a79938010073d14bd9db31924f7646968d2f4a/Src/Zle/zle_keymap.c#L1437-L1439
+#   https://github.com/yous/dotfiles/commit/c29bf215f5a8edc6123819944e1bf3336a4a6648
+if (( $+commands[vim] )); then
+  export EDITOR=vim
+  bindkey -e
+fi
+
 
 # Activate virtualenv if sourcing file exist
 [[ ! -f ~/.dotfiles/wsl-python.zsh ]] || source ~/.dotfiles/wsl-python.zsh
