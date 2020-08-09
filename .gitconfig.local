@@ -15,3 +15,9 @@
         log  = /usr/share/git/diff-highlight/diff-highlight | less -+XF -SQc
         show = /usr/share/git/diff-highlight/diff-highlight | less -+XF -SQc
         diff = /usr/share/git/diff-highlight/diff-highlight | less -+XF -SQc
+
+# diff-highlight.perl (Ubuntu)
+[pager]
+        log  = perl /usr/share/git-core/contrib/diff-highlight.perl | less -+XF -SQc
+        show  = perl /usr/share/git-core/contrib/diff-highlight.perl | less -+XF -SQc
+        diff  = perl /usr/share/git-core/contrib/diff-highlight.perl | less -+XF -SQc
