@@ -85,12 +85,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vundle zsh-autosuggestions substring-search)
 
 if [ -f "${ZSH}/oh-my-zsh.sh" ]; then
   source $ZSH/oh-my-zsh.sh
-  bindkey "^[[A" history-substring-search-up
-  bindkey "^[[B" history-substring-search-down
+  plugins=(git vundle zsh-autosuggestions substring-search)
 fi
 
 if [ -f "${HOME}/resty" ]; then
