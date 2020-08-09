@@ -283,6 +283,14 @@ if [[ -f ~/.zshrc.local ]]; then
   source ~/.zshrc.local
 fi
 
+# Add diff-highlight
+# (https://github.com/git/git/blob/master/contrib/diff-highlight/diff-highlight.perl)
+export PATH=/usr/share/git-core/contrib:$PATH
+
+# Init perl
+# before that install perl using apt-get install perl
+source ~/perl5/perlbrew/etc/bashrc
+
 export PATH=$HOME/.dotfiles:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/.p10k.zsh.
