@@ -190,15 +190,14 @@ if is-at-least 5.1 && [[ -d ~/.zinit ]]; then
 
   # Load a few important annexes, without Turbo
   # (this is currently required for annexes)
-  zinit light-mode for \
-      zsh-users/zsh-history-substring-search \
-      zsh-users/zsh-completions \
-      zdharma/fast-syntax-highlighting \
-      zinit-zsh/z-a-as-monitor \
-      zinit-zsh/z-a-patch-dl \
-      zinit-zsh/z-a-bin-gem-node \
-      simnalamburt/cgitc \
-      simnalamburt/ctrlf
+  zinit light zsh-users/zsh-history-substring-search
+  zinit light zsh-users/zsh-completions
+  zinit light zdharma/fast-syntax-highlighting
+  zinit light zinit-zsh/z-a-as-monitor
+  zinit light zinit-zsh/z-a-patch-dl
+  zinit light zinit-zsh/z-a-bin-gem-node
+  zinit light simnalamburt/cgitc
+  zinit light simnalamburt/ctrlf
 
   autoload -Uz compinit
   compinit
@@ -263,6 +262,12 @@ zmodload -i zsh/complist
 # Substring completion
 zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
+#
+# zshrc
+#
+export DOCKER_BUILDKIT=1
+export AWS_SDK_LOAD_CONFIG=true
+
 # If ENV of EDITOR/VISUAL_CODE includes 'vi', then every emacs-like bindings are
 # automatically disabled, including ^A/^E.
 # References:
@@ -289,7 +294,9 @@ export PATH=/usr/share/git-core/contrib:$PATH
 
 # Init perl
 # before that install perl using apt-get install perl
-source ~/perl5/perlbrew/etc/bashrc
+if [[ -f ~/perl5/perlbrew/etc/bashrc ]]; then
+  source ~/perl5/perlbrew/etc/bashrc
+fi
 
 export PATH=$HOME/.dotfiles:$PATH
 
