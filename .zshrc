@@ -190,21 +190,21 @@ if is-at-least 5.1 && [[ -d ~/.zinit ]]; then
 
   # Load a few important annexes, without Turbo
   # (this is currently required for annexes)
-  zinit light zsh-users/zsh-history-substring-search
-  zinit light zsh-users/zsh-completions
-  zinit light zdharma/fast-syntax-highlighting
+  zinit light simnalamburt/cgitc
+  zinit light simnalamburt/ctrlf
   zinit light zinit-zsh/z-a-as-monitor
   zinit light zinit-zsh/z-a-patch-dl
   zinit light zinit-zsh/z-a-bin-gem-node
-  zinit light simnalamburt/cgitc
-  zinit light simnalamburt/ctrlf
+  zinit light zdharma/fast-syntax-highlighting
+  zinit light zsh-users/zsh-history-substring-search
+  zinit light zsh-users/zsh-completions
 
   autoload -Uz compinit
   compinit
   zinit cdreplay
 
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
+  bindkey '$terminfo[kcuu1]' history-substring-search-up
+  bindkey '$terminfo[kcud1]' history-substring-search-down
   ### End of Zinit's installer chunk
 else
   # Default terminal
