@@ -206,7 +206,7 @@ try
   endif
   Plug 'ryanoasis/vim-devicons'
   Plug 'preservim/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'tpope/vim-fugitive'
 
   " Visual
   Plug 'vim-airline/vim-airline'
@@ -249,7 +249,7 @@ try
   "
   " Configs for plugins
   "
-  if s:use_coc
+  if s:use_coc && exists('*CocActionAsync')
     " coc.nvim
     let g:coc_disable_startup_warning = 1
     nnoremap <silent> K :call <SID>show_documentation<CR>
